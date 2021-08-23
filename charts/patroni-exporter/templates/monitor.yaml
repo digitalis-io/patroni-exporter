@@ -19,7 +19,7 @@ metadata:
 spec:
   endpoints:
   - path: /metrics
-    port: "{{ .Values.databaseService.targetPort }}"
+    port: "http"
   jobLabel: {{ .Values.serviceMonitor.jobLabel }}
   selector:
     matchLabels:

@@ -4,6 +4,7 @@ metadata:
   name: {{ include "patroni-exporter.fullname" . }}
   labels:
     {{- include "patroni-exporter.labels" . | nindent 4 }}
+    patroni-monitor: "true"
 spec:
   type: {{ .Values.service.type }}
   ports:
@@ -21,7 +22,6 @@ metadata:
   name: {{ .Values.databaseService.name }}
   labels:
     {{- include "patroni-exporter.labels" . | nindent 4 }}
-    patroni-monitor: "true"
 spec:
   type: {{ .Values.databaseService.type }}
   ports:

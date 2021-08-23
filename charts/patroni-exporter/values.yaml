@@ -49,14 +49,13 @@ databaseService:
   port: 8009
   type: ClusterIP
   targetPort: 8009
-
   selector:
     pg-cluster: machine
     role: master
 
 service:
   type: ClusterIP
-  port: 80
+  port: 9394
   targetPort: 9394
 
 resources: {}
