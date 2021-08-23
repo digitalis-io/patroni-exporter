@@ -1,0 +1,31 @@
+{{- if .Values.serviceMonitor.create }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+{{- if .Values.serviceMonitor.annotations }}
+  annotations:
+    {{- .Values.serviceMonitor.annotations | toYaml | nindent 2 }}
+{{- end }}
+  labels:
+{{- if .Values.serviceMonitor.labels }}
+    {{- .Values.serviceMonitor.labels | toYaml | nindent 4 }}
+{{- else }}
+    {{- include "patroni-exporter.labels" . | nindent 4 }}
+{{- end }}
+  name: {{ include "patroni-exporter.fullname" . }}
+{{- if .Values.serviceMonitor.namespace }}
+  namespace: {{ .Values.serviceMonitor.namespace }}
+{{- end }}
+spec:
+  endpoints:
+  - path: /metrics
+    port: {{ .Values.databaseService.targetPort }}
+  jobLabel: {{ .Values.serviceMonitor.jobLabel }}
+  selector:
+    matchLabels:
+      {{- include "patroni-exporter.selectorLabels" . | nindent 6 }}
+      patroni-monitor: "true"
+  namespaceSelector:
+    matchNames:
+    - {{ .Release.Namespace }}
+{{- end }}
