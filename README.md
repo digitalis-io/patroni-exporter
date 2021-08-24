@@ -12,7 +12,7 @@ helm upgrade --install patroni-exporter charts/patroni-exporter
 
 Check out the [chart readme](charts/patroni-exporter/README.md) for further details. The most basic config will require:
 
-```sh
+```yaml
 env:
   - name: PATRONI_SERVER_URL
     value: "http://MY-DB.DB-NAMESPACE.svc.cluster.local:8009"
